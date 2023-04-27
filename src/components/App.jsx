@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { nanoid } from 'nanoid';
 import { ContactList } from './ContactList/ContactList';
 import { ContactForm } from './ContactForm/ContactForm';
@@ -8,10 +9,17 @@ import initialContacts from './Data/contacts.json';
 import { useLocalStorage } from 'LocalStarage/useLocalStarage';
 
 export const App = () => {
-  const [contacts, setContacts] = useLocalStorage('contacts', initialContacts);
-  const [filter, setFilter] = useState('');
+  const { contacts, filter } = useSelector(state => state);
+  const dispatch = useDispatch();
+
+  // const [contacts, setContacts] = useLocalStorage('contacts', initialContacts);
+  // const [filter, setFilter] = useState('');
 
   const addContact = (name, number) => {
+    dispatch({
+      type: 'addContact',
+      payload: { id: nanoid(), name, number },
+    });
     const check = checkName(name);
     if (check.length <= 0) {
       const newContact = {
@@ -19,6 +27,7 @@ export const App = () => {
         name,
         number,
       };
+
       setContacts([newContact, ...contacts]);
       return;
     }
@@ -26,6 +35,7 @@ export const App = () => {
   };
 
   const deleteContact = contactId => {
+    dispatch({ type: 'deleteContact', payload: contact.id });
     setContacts(prevContacts =>
       prevContacts.filter(contact => contact.id !== contactId)
     );
