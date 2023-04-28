@@ -1,3 +1,6 @@
 import { initialContacts } from './Contacts/inicial';
-
-export const initialState = {};
+import { initialFilter } from './Filters/initial';
+export const initialState = {
+  contacts: initialContacts,
+  filter: initialFilter,
+};

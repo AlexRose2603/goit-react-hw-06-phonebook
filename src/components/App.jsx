@@ -1,57 +1,53 @@
-import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { nanoid } from 'nanoid';
 import { ContactList } from './ContactList/ContactList';
 import { ContactForm } from './ContactForm/ContactForm';
 import { Filter } from './Filter/Filter';
 import { Container, Title, Section, Total } from './App.styled';
-import initialContacts from './Data/contacts.json';
-import { useLocalStorage } from 'LocalStarage/useLocalStarage';
 
+// import { useLocalStorage } from 'LocalStarage/useLocalStarage';
+import { ADDCONTACT, DELETECONTACT } from 'store/Contacts/types';
+
+const newContact = {
+  id: nanoid(),
+  name,
+  number,
+};
 export const App = () => {
-  const { contacts, filter } = useSelector(state => state);
+  const { contacts } = useSelector(state => state.contacts);
+  const { filter } = useSelector(state => state.filter);
   const dispatch = useDispatch();
 
   // const [contacts, setContacts] = useLocalStorage('contacts', initialContacts);
   // const [filter, setFilter] = useState('');
 
-  const addContact = (name, number) => {
+  const addContact = newContact => {
     dispatch({
-      type: 'addContact',
-      payload: { id: nanoid(), name, number },
+      type: ADDCONTACT,
+      payload: newContact,
     });
-    const check = checkName(name);
-    if (check.length <= 0) {
-      const newContact = {
-        id: nanoid(),
-        name,
-        number,
-      };
-
-      setContacts([newContact, ...contacts]);
-      return;
-    }
-    alert('This name is already in the list!');
+    // const check = checkName(newContact.name);
+    // if (check.length <= 0) {
+    //   alert('This name is already in the list!');
+    // }
+    // return newContact;
+    // setContacts([newContact, ...contacts]);
   };
 
-  const deleteContact = contactId => {
-    dispatch({ type: 'deleteContact', payload: contact.id });
-    setContacts(prevContacts =>
-      prevContacts.filter(contact => contact.id !== contactId)
-    );
+  const deleteContact = () => {
+    dispatch({ type: DELETECONTACT, payload: contact.id });
   };
 
-  const checkName = name => {
-    return contacts.filter(contact => contact.name.includes(name));
-  };
+  // const checkName = name => {
+  //   return contacts.filter(contact => contact.name.includes(name));
+  // };
 
-  const onFilter = event => {
-    setFilter(event.currentTarget.value);
-  };
+  // const onFilter = event => {
+  //   setFilter(event.currentTarget.value);
+  // };
 
   const filteredContacts = (filter, contacts) => {
     const normalizeFilter = filter.toLowerCase();
-
     return contacts.filter(contact =>
       contact.name.toLowerCase().includes(normalizeFilter)
     );
