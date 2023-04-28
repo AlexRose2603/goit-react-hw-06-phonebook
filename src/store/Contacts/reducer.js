@@ -6,7 +6,7 @@ export const contactsReducer = (state = initialContacts, action) => {
     case ADDCONTACT:
       return {
         ...state,
-        contacts: [state.contacts, action.payload],
+        contacts: [...state.contacts, action.payload],
       };
     case DELETECONTACT: {
       return {
