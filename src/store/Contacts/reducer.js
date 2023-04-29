@@ -1,3 +1,4 @@
+import { createReducer } from '@reduxjs/toolkit';
 import { initialContacts } from './inicial';
 import { ADD_CONTACT, DELETE_CONTACT } from './types';
 
@@ -20,3 +21,18 @@ export const contactsReducer = (state = initialContacts, action) => {
       return state;
   }
 };
+
+//-------------------TOOLKIT--------------------//
+// export const contactsReducer = createReducer(initialContacts, {
+//   [onAdd]: (state, action) => {
+//     return { ...state, contacts: [...state.contacts, action.payload], }
+//   }
+//   [onDelete]: (state, action) => {
+//     return {
+//       ...state,
+//         contacts: state.contacts.filter(
+//           contact => contact.id !== action.payload
+//   ),
+//     }
+// };
+// })

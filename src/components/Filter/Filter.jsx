@@ -1,6 +1,12 @@
 import PropTypes from 'prop-types';
 import { FilterForm, Input } from './Filter.styled';
-export const Filter = ({ value, onFilter }) => {
+import { useDispatch, useSelector } from 'react-redux';
+import { filterContacts } from 'store/Filters/actions';
+export const Filter = ({ value }) => {
+  const dispatch = useDispatch();
+  const onFilter = filter => {
+    dispatch(filterContacts(filter.target.value));
+  };
   return (
     <FilterForm>
       <Input

@@ -6,3 +6,4 @@ export const reducer = combineReducers({
   contacts: contactsReducer,
   filter: filterReducer,
 });
+console.log(reducer);
