@@ -1,21 +1,11 @@
 import { initialContacts } from 'store/Contacts/inicial';
+import { FILTER_CONTACTS } from './types';
+
 export const filterReducer = (state = initialContacts, action) => {
   switch (action.type) {
-    case 'checkName': {
-          return {
-          contacts.filter(contact => contact.name.includes(name))
-      };
-      }
-    //   case "onFilter": {
-    //       return {
-    //          event.currentTarget.value
-    //       }
-    //   }
-      case "filteredContacts": {
-          return {
-             ...state,
-          }
-          }
+    case FILTER_CONTACTS:
+      return action.payload;
+
     default:
       return state;
   }

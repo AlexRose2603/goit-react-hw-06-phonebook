@@ -1,16 +1,12 @@
-import { ADDCONTACT, DELETECONTACT } from './types';
+import { ADD_CONTACT, DELETE_CONTACT } from './types';
 import { nanoid } from 'nanoid';
 
 export const onAdd = newContact => ({
-  type: ADDCONTACT,
-  payload: {
-    id: nanoid(),
-    name,
-    number,
-  },
+  type: ADD_CONTACT,
+  payload: newContact,
 });
 
-export const onDelete = contactId => ({
-  type: DELETECONTACT,
-  payload: contactId,
+export const onDelete = id => ({
+  type: DELETE_CONTACT,
+  payload: nanoid(),
 });

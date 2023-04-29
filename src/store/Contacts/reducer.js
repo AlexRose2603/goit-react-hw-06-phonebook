@@ -1,14 +1,14 @@
 import { initialContacts } from './inicial';
-import { ADDCONTACT, DELETECONTACT } from './types';
+import { ADD_CONTACT, DELETE_CONTACT } from './types';
 
 export const contactsReducer = (state = initialContacts, action) => {
   switch (action.type) {
-    case ADDCONTACT:
+    case ADD_CONTACT:
       return {
         ...state,
         contacts: [...state.contacts, action.payload],
       };
-    case DELETECONTACT: {
+    case DELETE_CONTACT: {
       return {
         ...state,
         contacts: state.contacts.filter(

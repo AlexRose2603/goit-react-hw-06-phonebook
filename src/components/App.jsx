@@ -5,51 +5,45 @@ import { ContactForm } from './ContactForm/ContactForm';
 import { Filter } from './Filter/Filter';
 import { Container, Title, Section, Total } from './App.styled';
 import { onAdd, onDelete } from 'store/Contacts/actions';
-
-// import { useLocalStorage } from 'LocalStarage/useLocalStarage';
+import { filterContacts } from 'store/Filters/actions';
 
 export const App = () => {
   const { contacts } = useSelector(state => state.contacts);
   const { filter } = useSelector(state => state.filter);
   const dispatch = useDispatch();
-  const newContact = {
-    id: nanoid(),
-    name,
-    number,
-  };
-  // const [contacts, setContacts] = useLocalStorage('contacts', initialContacts);
-  // const [filter, setFilter] = useState('');
 
-  const addContact = newContact => {
+  const addContact = (name, number) => {
+    const newContact = {
+      id: nanoid(),
+      name,
+      number,
+    };
     dispatch(onAdd(newContact));
-    // dispatch({
-    //   type: ADDCONTACT,
-    //   payload: newContact,
-    // });
-    // const check = checkName(newContact.name);
-    // if (check.length <= 0) {
-    //   alert('This name is already in the list!');
-    // }
+
+    const check = checkName(newContact.name);
+    if (check.length <= 0) {
+      alert('This name is already in the list!');
+    }
     // return newContact;
     // setContacts([newContact, ...contacts]);
   };
 
-  const deleteContact = contact => {
-    dispatch(onDelete(contact.id));
+  const deleteContact = id => {
+    dispatch(onDelete(id));
   };
 
   const checkName = name => {
     return contacts.filter(contact => contact.name.includes(name));
   };
 
-  const onFilter = event => {
-    setFilter(event.currentTarget.value);
+  const onFilter = filter => {
+    dispatch(filterContacts(filter));
   };
 
   const filteredContacts = (filter, contacts) => {
-    const normalizeFilter = filter.toLowerCase();
+    dispatch(filterContacts(filter));
     return contacts.filter(contact =>
-      contact.name.toLowerCase().includes(normalizeFilter)
+      contact.name.toLowerCase().includes(filter.toLowerCase())
     );
   };
   const listedContacts = filteredContacts(filter, contacts);
