@@ -1,5 +1,3 @@
-import React from 'react';
-
 import {
   Container,
   List,
@@ -8,19 +6,20 @@ import {
   Number,
   DeleteBtn,
 } from './ContactList.styled';
-import { onDelete } from 'store/Contacts/actions';
 import { useDispatch, useSelector } from 'react-redux';
+import { onDelete } from 'store/Contacts/slice';
+
 export const ContactList = () => {
   const { contacts } = useSelector(state => state.contacts);
   const { filter } = useSelector(state => state.filter);
   const dispatch = useDispatch();
-  const showContacts = contacts.filter(contact =>
+  const filteredContacts = contacts.filter(contact =>
     contact.name.toLowerCase().includes(filter.toLowerCase())
   );
   return (
     <Container>
       <List>
-        {showContacts.map(({ id, name, number }) => (
+        {filteredContacts.map(({ id, name, number }) => (
           <Contact key={id}>
             <Name>{name}</Name>
             <Number>{number}</Number>

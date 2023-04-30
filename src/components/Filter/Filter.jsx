@@ -1,9 +1,10 @@
-import PropTypes from 'prop-types';
 import { FilterForm, Input } from './Filter.styled';
-import { useDispatch, useSelector } from 'react-redux';
-import { filterContacts } from 'store/Filters/actions';
+import { useDispatch } from 'react-redux';
+import { filterContacts } from 'store/Filters/slice';
+
 export const Filter = ({ value }) => {
   const dispatch = useDispatch();
+
   const onFilter = filter => {
     dispatch(filterContacts(filter.target.value));
   };
@@ -18,9 +19,4 @@ export const Filter = ({ value }) => {
       ></Input>
     </FilterForm>
   );
-};
-
-Filter.propTypes = {
-  value: PropTypes.string.isRequired,
-  onFilter: PropTypes.func.isRequired,
 };

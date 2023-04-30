@@ -9,17 +9,19 @@ import {
   NumberInput,
   Button,
 } from './ContactForm.styled';
-import { onAdd } from 'store/Contacts/actions';
+
 import { useDispatch } from 'react-redux';
 
-export const ContactForm = ({ onSubmit }) => {
+import { onAdd } from 'store/Contacts/slice';
+
+export const ContactForm = () => {
   const dispatch = useDispatch();
   const handleSubmit = event => {
     event.preventDefault();
     const form = event.currentTarget;
     const { name, number } = form.elements;
-    dispatch(onAdd(name.value, number.value));
 
+    dispatch(onAdd(name.value, number.value));
     form.reset();
   };
 
