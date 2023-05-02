@@ -3,9 +3,10 @@ import { ContactList } from './ContactList/ContactList';
 import { ContactForm } from './ContactForm/ContactForm';
 import { Filter } from './Filter/Filter';
 import { Container, Title, Section, Total } from './App.styled';
+import { selectorContacts } from 'store/Contacts/selectors';
 
 export const App = () => {
-  const { contacts } = useSelector(state => state.contacts);
+  const contacts = useSelector(selectorContacts);
   return (
     <Container>
       <Title>Phonebook</Title>

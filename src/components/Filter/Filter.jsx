@@ -1,10 +1,11 @@
 import { FilterForm, Input } from './Filter.styled';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { selectorFilter } from 'store/Filters/selectors';
 import { filterContacts } from 'store/Filters/slice';
 
-export const Filter = ({ value }) => {
+export const Filter = () => {
   const dispatch = useDispatch();
-
+  const filter = useSelector(selectorFilter);
   const onFilter = filter => {
     dispatch(filterContacts(filter.target.value));
   };
@@ -14,7 +15,7 @@ export const Filter = ({ value }) => {
         name="filter"
         type="text"
         placeholder="Enter name"
-        value={value}
+        value={filter}
         onChange={onFilter}
       ></Input>
     </FilterForm>

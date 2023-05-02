@@ -10,18 +10,41 @@ import {
   Button,
 } from './ContactForm.styled';
 
-import { useDispatch } from 'react-redux';
-
+import { useDispatch, useSelector } from 'react-redux';
+import { nanoid } from '@reduxjs/toolkit';
 import { onAdd } from 'store/Contacts/slice';
+import { selectorContacts } from 'store/Contacts/selectors';
+import { Report } from 'notiflix/build/notiflix-report-aio';
 
 export const ContactForm = () => {
+  const contacts = useSelector(selectorContacts);
   const dispatch = useDispatch();
   const handleSubmit = event => {
     event.preventDefault();
     const form = event.currentTarget;
     const { name, number } = form.elements;
 
-    dispatch(onAdd(name.value, number.value));
+    const existingName = contacts.some(
+      contact => contact.name.toLowerCase() === name.value.toLowerCase()
+    );
+    if (existingName) {
+      Report.info('Info', 'This name is already in the contact list');
+      return;
+    }
+    const existingNumber = contacts.some(
+      contact => contact.number === number.value
+    );
+    if (existingNumber) {
+      Report.info('Info', 'This number is already in the contact list');
+      return;
+    }
+    const newContact = {
+      id: nanoid(),
+      name: name.value,
+      number: number.value,
+    };
+
+    dispatch(onAdd(newContact));
     form.reset();
   };
 
